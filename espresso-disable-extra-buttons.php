@@ -28,10 +28,14 @@ License: GPLv2
  
 function espresso_remove_extra_buttons() {
  
-  if (isset($_REQUEST['action']) && ($_REQUEST['action'] == 'add_new_event' || $_REQUEST['action'] == 'edit')) {
-		remove_all_filters('mce_buttons_3');
-		remove_all_filters('mce_buttons_4');
+  if ((isset($_REQUEST['action']) && $_REQUEST['action'] == 'add_new_event') || ((isset($_REQUEST['page']) && $_REQUEST['page'] == 'events') && (isset($_REQUEST['action']) && $_REQUEST['action'] == 'edit'))) {
+	remove_all_filters('mce_buttons_3');
+	remove_all_filters('mce_buttons_4');
+
+        //Inpost Gallery
+        remove_action('init', array('PluginusNet_InpostGallery', 'init'), 1);
+
 	}
 }
  
-add_action ('init', 'espresso_remove_extra_buttons', 11 );
+add_action ('plugins_loaded', 'espresso_remove_extra_buttons', 11 );
